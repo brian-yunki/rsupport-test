@@ -15,9 +15,9 @@ public class TestContainersConfiguration {
     @RestartScope
     public MySQLContainer<?> mySQLContainer() {
         return new MySQLContainer<>(DockerImageName.parse("mysql:8.3.0"))
-                .withUsername("test")
-                .withPassword("test")
-                .withDatabaseName("test")
+                .withUsername("jeon.yunki")
+                .withPassword("1q2w3e4r!")
+                .withDatabaseName("rsupport_test")
                 .withInitScript("schema.sql")
                 .withReuse(true);
     }

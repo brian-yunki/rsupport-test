@@ -2,20 +2,37 @@ spring:
   sql:
     init:
       mode: always
-#  datasource:
-#    type: com.zaxxer.hikari.HikariDataSource
-#    url: jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    hikari:
-#      maximum-pool-size: 200
-#      minimum-idle: 5
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: #override this
+    username: #override this
+    password: #override this
+    hikari:
+      maximum-pool-size: 200
+      minimum-idle: 5
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useSSL: false
+        useUnicode: yes
+        characterEncoding: utf-8
+        #5min
+        idle-timeout: 10000
+        #10min
+        max-lifetime: 60000
+        autoReconnect: true
+        allowPublicKeyRetrieval: true
+        serverTimezone: Asia/Seoul
+        verifyServerCertificate: false
   jpa:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         default_batch_fetch_size: 100
 ---
@@ -23,3 +40,7 @@ spring:
   config:
     activate:
       on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/rsupport_test
+    username: jeon.yunki
+    password: 1q2w3e4r!

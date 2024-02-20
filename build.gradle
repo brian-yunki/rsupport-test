@@ -39,7 +39,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-docker-compose")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -47,7 +46,8 @@ dependencies {
     testImplementation 'org.testcontainers:mysql:1.19.5'
     testImplementation 'io.rest-assured:rest-assured'
 
-    testImplementation("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+//    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
 }
 
