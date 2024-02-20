@@ -42,9 +42,9 @@ public class NoticeControllerTest {
     @Test
     void testConnection_ForMySqlContainer(){
         Assertions.assertTrue(mySQLContainer.isRunning());
-        Assertions.assertEquals("test", mySQLContainer.getUsername());
-        Assertions.assertEquals("test", mySQLContainer.getPassword());
-        Assertions.assertEquals("test", mySQLContainer.getDatabaseName());
+        Assertions.assertEquals("jeon.yunki", mySQLContainer.getUsername());
+        Assertions.assertEquals("1q2w3e4r!", mySQLContainer.getPassword());
+        Assertions.assertEquals("rsupport_test", mySQLContainer.getDatabaseName());
     }
 
 

@@ -1,6 +1,5 @@
 package rsupport.test;
 
-import org.springframework.boot.devtools.restart.RestartScope;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ public class TestContainersConfiguration {
 
     @Bean
     @ServiceConnection
-    @RestartScope
     public MySQLContainer<?> mySQLContainer() {
         return new MySQLContainer<>(DockerImageName.parse("mysql:8.3.0"))
                 .withUsername("jeon.yunki")
