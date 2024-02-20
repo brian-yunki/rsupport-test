@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  ###################################
+  #### DB Mysql
+  ###################################
+  db:
+    image: mysql:8.3.0
+    container_name: rsupport-mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --range_optimizer_max_mem_size=16777216
+    restart: always
+    environment:
+      MYSQL_DATABASE: rsupport_test
+      MYSQL_USER: jeon.yunki
+      MYSQL_PASSWORD: 1q2w3e4r!
+      MYSQL_ROOT_PASSWORD: 1q2w3e4r!
+      TZ: Asia/Seoul
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d
+
+    ports:
+      - 3306:3306

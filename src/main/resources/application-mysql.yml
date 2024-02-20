@@ -1,12 +1,16 @@
 spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: 200
-      minimum-idle: 5
+  sql:
+    init:
+      mode: always
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    url: jdbc:mysql://%s:%s/%s?allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      maximum-pool-size: 200
+#      minimum-idle: 5
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: none
     properties:
