@@ -2,7 +2,6 @@ package rsupport.test.notice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Comment;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notice {
+public class NoticeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,6 @@ public class Notice {
     private Long id;
 
     @Column(name = "TITLE", nullable = false)
-    @Comment("제목")
     private String title;
 
     @Column(name = "SUBJECT", nullable = false)

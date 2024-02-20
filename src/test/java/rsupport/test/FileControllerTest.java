@@ -8,23 +8,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
-import rsupport.test.notice.entity.NoticeEntity;
-import rsupport.test.notice.repository.NoticeRepository;
+import rsupport.test.storage.entity.FileEntity;
+import rsupport.test.storage.repository.FileRepository;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasSize;
 
 @Import(TestContainersConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class NoticeControllerTest {
+public class FileControllerTest {
 
     @LocalServerPort
     private Integer port;
 
     @Autowired
-    private NoticeRepository repository;
+    private FileRepository repository;
 
     @Autowired
     MySQLContainer<?> mySQLContainer;
@@ -40,29 +42,19 @@ public class NoticeControllerTest {
     }
 
     @Test
-    void testConnection_ForMySqlContainer(){
-        Assertions.assertTrue(mySQLContainer.isRunning());
-        Assertions.assertEquals("test", mySQLContainer.getUsername());
-        Assertions.assertEquals("test", mySQLContainer.getPassword());
-        Assertions.assertEquals("test", mySQLContainer.getDatabaseName());
-    }
-
-
-    @Test
-    void findNoticeList_WithSize() {
+    void findFileList_WhenDoNotHaveAnyRelation() {
         LocalDateTime now = LocalDateTime.now();
         repository.saveAll(List.of(
-                NoticeEntity.builder().title("TEST1").subject("테스트1").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
-                NoticeEntity.builder().title("TEST2").subject("테스트2").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
-                NoticeEntity.builder().title("TEST3").subject("테스트3").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build()
+                FileEntity.builder().name("TEST1").path("/tmp/xxxx.jpg").useYn("Y").createId("jeon.yunki").createDate(now).size(2048L).build(),
+                FileEntity.builder().name("TEST2").path("/tmp/yyyy.png").useYn("Y").createId("jeon.yunki").createDate(now).size(1024L).build()
         ));
 
         given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/notice")
+                .get("/file")
                 .then()
                 .statusCode(200)
-                .body(".", hasSize(3));
+                .body(".", hasSize(2));
     }
 }

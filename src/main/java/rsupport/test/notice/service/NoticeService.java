@@ -2,7 +2,7 @@ package rsupport.test.notice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import rsupport.test.notice.entity.Notice;
+import rsupport.test.notice.entity.NoticeEntity;
 import rsupport.test.notice.repository.NoticeRepository;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    public List<Notice> findAll() {
+    public List<NoticeEntity> findAll() {
         return noticeRepository.findAll();
     }
 }
