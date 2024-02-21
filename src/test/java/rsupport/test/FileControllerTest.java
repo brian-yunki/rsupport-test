@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
-import rsupport.test.storage.entity.FileEntity;
-import rsupport.test.storage.repository.FileRepository;
+import rsupport.test.domain.storage.entity.File;
+import rsupport.test.domain.storage.repository.FileRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,8 +45,8 @@ public class FileControllerTest {
     void findFileList_WhenDoNotHaveAnyRelation() {
         LocalDateTime now = LocalDateTime.now();
         repository.saveAll(List.of(
-                FileEntity.builder().name("TEST1").path("/tmp/xxxx.jpg").useYn("Y").createId("jeon.yunki").createDate(now).size(2048L).build(),
-                FileEntity.builder().name("TEST2").path("/tmp/yyyy.png").useYn("Y").createId("jeon.yunki").createDate(now).size(1024L).build()
+                File.builder().name("TEST1").path("/tmp/xxxx.jpg").useYn("Y").createId("jeon.yunki").createDate(now).size(2048L).build(),
+                File.builder().name("TEST2").path("/tmp/yyyy.png").useYn("Y").createId("jeon.yunki").createDate(now).size(1024L).build()
         ));
 
         given()

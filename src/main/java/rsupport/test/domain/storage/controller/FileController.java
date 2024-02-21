@@ -1,12 +1,12 @@
-package rsupport.test.storage.controller;
+package rsupport.test.domain.storage.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rsupport.test.storage.entity.FileEntity;
-import rsupport.test.storage.service.FileService;
+import rsupport.test.domain.storage.entity.File;
+import rsupport.test.domain.storage.service.FileService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class FileController {
     private final FileService fileService;
 
     @GetMapping("")
-    public List<FileEntity> getAll() {
+    public List<File> getAll() {
         return fileService.findAll();
     }
 

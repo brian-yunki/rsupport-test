@@ -1,7 +1,5 @@
 spring:
-  sql:
-    init:
-      mode: always
+  sql.init.mode: never
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -30,7 +28,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -40,7 +38,9 @@ spring:
   config:
     activate:
       on-profile: local
+  sql.init.mode: always
   datasource:
     url: jdbc:mysql://localhost:3306/rsupport_test
     username: jeon.yunki
     password: 1q2w3e4r!
+  jpa.hibernate.ddl-auto: none

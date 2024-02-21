@@ -8,8 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
-import rsupport.test.notice.entity.NoticeEntity;
-import rsupport.test.notice.repository.NoticeRepository;
+import rsupport.test.domain.notice.entity.Notice;
+import rsupport.test.domain.notice.repository.NoticeRepository;
+import rsupport.test.domain.storage.entity.File;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import static io.restassured.RestAssured.given;
@@ -47,14 +49,42 @@ public class NoticeControllerTest {
         Assertions.assertEquals("rsupport_test", mySQLContainer.getDatabaseName());
     }
 
+    @Test
+    void insert_notice_without_files() {
+        LocalDateTime now = LocalDateTime.now();
+        repository.saveAll(List.of(
+                Notice.builder().title("TEST1").subject("테스트1").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
+                Notice.builder().title("TEST2").subject("테스트2").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
+                Notice.builder().title("TEST3").subject("테스트3").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build()
+        ));
+    }
+
+
+    @Test
+    void insert_notice_with_files() {
+        LocalDateTime now = LocalDateTime.now();
+        Notice notice = Notice.builder().title("TEST1")
+                .subject("테스트1")
+                .useYn("Y")
+                .createId("jeon.yunki")
+                .createDate(now)
+                .viewCount(0L)
+                .startDate(now)
+                .endDate(now)
+                .files(List.of(File.builder().name("TEST1").path("/tmp/xxxx.jpg").useYn("Y").createId("jeon.yunki").createDate(now).size(2048L).build()))
+                .build();
+//        Notice.builder().files()
+
+        repository.save(notice);
+    }
 
     @Test
     void findNoticeList_WithSize() {
         LocalDateTime now = LocalDateTime.now();
         repository.saveAll(List.of(
-                NoticeEntity.builder().title("TEST1").subject("테스트1").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
-                NoticeEntity.builder().title("TEST2").subject("테스트2").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
-                NoticeEntity.builder().title("TEST3").subject("테스트3").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build()
+                Notice.builder().title("TEST1").subject("테스트1").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
+                Notice.builder().title("TEST2").subject("테스트2").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build(),
+                Notice.builder().title("TEST3").subject("테스트3").useYn("Y").createId("jeon.yunki").createDate(now).viewCount(0L).startDate(now).endDate(now).build()
         ));
 
         given()

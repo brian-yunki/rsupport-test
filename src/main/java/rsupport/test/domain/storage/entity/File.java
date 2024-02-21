@@ -1,17 +1,18 @@
-package rsupport.test.storage.entity;
+package rsupport.test.domain.storage.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
+import rsupport.test.domain.notice.entity.Notice;
+import rsupport.test.domain.support.Aduit;
 
 @Entity
 @Table(name = "NOTICE_FILE")
-@Builder
 @Getter
+@SuperBuilder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileEntity {
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+public class File extends Aduit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +31,8 @@ public class FileEntity {
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
-    @Column(name = "CREATE_ID", nullable = false)
-    private String createId;
+    @ManyToOne
+    @JoinColumn(name = "NOTICE_ID")
+    private Notice notice;
 
-    @Column(name = "CREATE_DATE", nullable = false)
-    private LocalDateTime createDate;
-
-    @Column(name = "UPDATE_ID")
-    private String updateId;
-
-    @Column(name = "UPDATE_DATE")
-    private LocalDateTime updateDate;
 }

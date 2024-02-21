@@ -1,12 +1,12 @@
-package rsupport.test.notice.controller;
+package rsupport.test.domain.notice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rsupport.test.notice.entity.NoticeEntity;
-import rsupport.test.notice.service.NoticeService;
+import rsupport.test.domain.notice.service.NoticeService;
+import rsupport.test.domain.notice.entity.Notice;
 
 import java.util.List;
 
@@ -17,9 +17,8 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-
     @GetMapping("")
-    public List<NoticeEntity> getAll() {
+    public List<Notice> getAll() {
         return noticeService.findAll();
     }
 }
