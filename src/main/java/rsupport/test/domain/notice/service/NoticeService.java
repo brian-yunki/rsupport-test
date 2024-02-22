@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rsupport.test.domain.notice.entity.Notice;
+import rsupport.test.domain.notice.entity.NoticeEntity;
+import rsupport.test.domain.notice.model.Notice;
 import rsupport.test.domain.notice.repository.AttachmentRepository;
 import rsupport.test.domain.notice.repository.NoticeRepository;
+import rsupport.test.domain.support.Converter;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -24,12 +25,17 @@ public class NoticeService {
      * 리스트조회
      * @return
      */
-    public List<Notice> getAll() {
-        return noticeRepository.findAllByUseYnEqualsIsTrue();
+    public List<Notice> selectAll() {
+        List<NoticeEntity> entities = noticeRepository.selectAll();
+        return Converter.toNoticeModel(entities);
     }
 
-    public List<Notice> getById(Long id) {
-       return noticeRepository.findById(id).stream().collect(Collectors.toList());
+    public Notice selectById(Long id) {
+       NoticeEntity noticeEntity = noticeRepository.selectById(id).stream()
+               .findFirst()
+               .filter(e -> !"N".equals(e.getUseYn()))
+               .orElseThrow(() -> new RuntimeException("존재하지 않는 공지입니다."));
+       return Converter.toNoticeModel(List.of(noticeEntity)).getFirst();
     }
 
 
@@ -48,18 +54,25 @@ public class NoticeService {
      */
     @Transactional
     public void deleteById(Long id) {
-        Notice notice = noticeRepository.findById(id).stream()
+        NoticeEntity noticeEntity = noticeRepository.findById(id).stream()
                 .findFirst()
                 .filter(e -> !"N".equals(e.getUseYn()))
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 공지입니다."));
 
-        notice.setUseYn("N");
+        noticeEntity.setUseYn("N");
         noticeRepository.flush();
 
-        Long result = attachmentRepository.disableAll(notice.getId(), notice.getUpdateId(), notice.getUpdateDate());
+        Long result = attachmentRepository.disableAllByNoticeId(noticeEntity.getId(), noticeEntity.getUpdateId(), noticeEntity.getUpdateDate());
         attachmentRepository.flush();
 //        noticeEntity.getNoticeFileEntities().forEach(e -> e.setUseYn("N"));
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void save(Notice notice) {
+        noticeRepository.saveAll(Converter.toNoticeEntities(List.of(notice)));
+    }
+
+
 
 
 }

@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.MySQLContainer;
-import rsupport.test.domain.notice.entity.Attachment;
-import rsupport.test.domain.notice.entity.Notice;
+import rsupport.test.domain.notice.entity.AttachmentEntity;
+import rsupport.test.domain.notice.entity.NoticeEntity;
 import rsupport.test.domain.notice.repository.NoticeRepository;
 
 import java.time.LocalDateTime;
@@ -18,14 +18,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import static rsupport.test.domain.notice.entity.QNotice.notice;
+import static rsupport.test.domain.notice.entity.QNoticeEntity.noticeEntity;
 
 @Slf4j
 @SpringBootTest
 @Import(TestContainersConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-public class TestNoticeWithTestContainers {
+public class TestNoticeWithTestContainersEntity {
 
     @Autowired
     private MySQLContainer<?> mySQLContainer;
@@ -65,8 +65,8 @@ public class TestNoticeWithTestContainers {
 //                        notice.getStartDate(), notice.getEndDate(), notice.getUseYn(), notice.getViewCount(), LocalDateTime.now())
 //                .execute();
 //
-        List<Notice> noticeList = dummyNoticeData(DATA_SAZE);
-        noticeList.forEach(notice -> {
+        List<NoticeEntity> noticeEntityList = dummyNoticeData(DATA_SAZE);
+        noticeEntityList.forEach(notice -> {
             notice.setAttachmentList(dummyNoticeFileData((int)(Math.random() * 10 +1)));
         });
 
@@ -74,7 +74,7 @@ public class TestNoticeWithTestContainers {
 //        noticeEntityList.forEach(notice -> entityManager.persist(notice));
 
         // or
-        repository.saveAll(noticeList);
+        repository.saveAll(noticeEntityList);
     }
 
     @DisplayName("공지사항 조회")
@@ -85,11 +85,11 @@ public class TestNoticeWithTestContainers {
         insert_notice_date_with_files();
 
         // 조회
-        List<Notice> noticeList = jpaQueryFactory.selectFrom(notice)
-                .where(notice.useYn.eq("Y"))
+        List<NoticeEntity> noticeEntityList = jpaQueryFactory.selectFrom(noticeEntity)
+                .where(noticeEntity.useYn.eq("Y"))
                 .fetch();
 
-        Assertions.assertEquals(DATA_SAZE, noticeList.size());
+        Assertions.assertEquals(DATA_SAZE, noticeEntityList.size());
     }
 
     @DisplayName("공지사항 삭제")
@@ -99,22 +99,22 @@ public class TestNoticeWithTestContainers {
         insert_notice_date_with_files();
 
         // 조회
-        List<Notice> beforeList = jpaQueryFactory.selectFrom(notice)
-                .where(notice.useYn.eq("Y"))
+        List<NoticeEntity> beforeList = jpaQueryFactory.selectFrom(noticeEntity)
+                .where(noticeEntity.useYn.eq("Y"))
                 .fetch();
 
         // 삭제
         Long noticeId = beforeList.getFirst().getId();
-        Long result = jpaQueryFactory.update(notice)
-                .set(notice.useYn, "N")
-                .where(notice.id.eq(noticeId))
+        Long result = jpaQueryFactory.update(noticeEntity)
+                .set(noticeEntity.useYn, "N")
+                .where(noticeEntity.id.eq(noticeId))
                 .execute();
 
         Assertions.assertTrue(result  > 0);
 
         // 조회
-        List<Notice> afterList = jpaQueryFactory.selectFrom(notice)
-                .where(notice.useYn.eq("Y"))
+        List<NoticeEntity> afterList = jpaQueryFactory.selectFrom(noticeEntity)
+                .where(noticeEntity.useYn.eq("Y"))
                 .fetch();
 
         Assertions.assertTrue(afterList.size() == (DATA_SAZE - 1));
@@ -134,11 +134,11 @@ public class TestNoticeWithTestContainers {
 
     private static final int DATA_SAZE = 5;
 
-    private List<Notice> dummyNoticeData(int size) {
+    private List<NoticeEntity> dummyNoticeData(int size) {
         LocalDateTime now = LocalDateTime.now();
-        List<Notice> noticeList = new LinkedList<>();
+        List<NoticeEntity> noticeEntityList = new LinkedList<>();
         for (int i = 1; i <= size; i++) {
-            noticeList.add(Notice.builder()
+            noticeEntityList.add(NoticeEntity.builder()
                     .title("TEST" + i).subject("테스트" + i)
                     .useYn("Y")
 //                    .createId("jeon.yunki")
@@ -148,14 +148,14 @@ public class TestNoticeWithTestContainers {
                     .endDate(now)
                     .build());
         }
-        return noticeList;
+        return noticeEntityList;
     }
 
 
-    private List<Attachment> dummyNoticeFileData(int size) {
-        List<Attachment> attachmentList = new LinkedList<>();
+    private List<AttachmentEntity> dummyNoticeFileData(int size) {
+        List<AttachmentEntity> attachmentEntityList = new LinkedList<>();
         for (int i = 1; i <= size; i++) {
-            attachmentList.add(Attachment.builder()
+            attachmentEntityList.add(AttachmentEntity.builder()
                     .name("TEST1")
                     .path("/tmp/" + UUID.randomUUID().toString() + ".png")
 //                    .createId("jeon.yunki")
@@ -164,7 +164,7 @@ public class TestNoticeWithTestContainers {
                     .build());
         }
 
-        return attachmentList;
+        return attachmentEntityList;
     }
 
 

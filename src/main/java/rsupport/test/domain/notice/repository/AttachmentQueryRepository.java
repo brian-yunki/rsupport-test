@@ -7,6 +7,6 @@ import java.time.LocalDateTime;
 @Repository
 public interface AttachmentQueryRepository {
 
-    Long disableAll(Long noticeId, String updateId, LocalDateTime updateDate);
-
+    Long disableAllByNoticeId(Long noticeId, String updateId, LocalDateTime updateDate);
+//    Long disableById(Long id);
 }

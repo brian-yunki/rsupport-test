@@ -20,10 +20,10 @@ import static rsupport.test.domain.support.JsonHelper.prettyPrintJsonUsingDefaul
 
 @Slf4j
 @Import({TestContainersConfiguration.class,
-        TestNoticeWithTestContainers.class})
+        TestNoticeWithTestContainersEntity.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestNoticeControllerWithTestContainers {
+public class TestNoticeControllerWithTestContainersEntity {
 
     @LocalServerPort
     private Integer port;
@@ -33,7 +33,7 @@ public class TestNoticeControllerWithTestContainers {
 
 
     @Autowired
-    private TestNoticeWithTestContainers testNoticeWithTestContainers;
+    private TestNoticeWithTestContainersEntity testNoticeWithTestContainers;
 
     @BeforeAll
     void init() {

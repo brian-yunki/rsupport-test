@@ -18,7 +18,7 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notice extends BaseEntity {
+public class NoticeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,11 +47,11 @@ public class Notice extends BaseEntity {
     @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Attachment> attachments = new ArrayList<>();
+    private List<AttachmentEntity> attachments = new ArrayList<>();
 
-    public void setAttachmentList(List<Attachment> noticeAttachmentEntities) {
-        noticeAttachmentEntities.forEach(file -> file.setNotice(this));
-        this.attachments.addAll(noticeAttachmentEntities);
+    public void setAttachmentList(List<AttachmentEntity> noticeAttachmentEntityEntities) {
+        noticeAttachmentEntityEntities.forEach(file -> file.setNotice(this));
+        this.attachments.addAll(noticeAttachmentEntityEntities);
     }
 
 }

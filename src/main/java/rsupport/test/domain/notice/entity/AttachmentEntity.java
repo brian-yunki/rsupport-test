@@ -14,7 +14,7 @@ import rsupport.test.domain.support.BaseEntity;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Attachment extends BaseEntity {
+public class AttachmentEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,6 @@ public class Attachment extends BaseEntity {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "NOTICE_ID", nullable = false)
-    private Notice notice;
+    private NoticeEntity notice;
 
 }

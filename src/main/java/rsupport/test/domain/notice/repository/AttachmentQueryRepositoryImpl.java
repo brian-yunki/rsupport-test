@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static rsupport.test.domain.notice.entity.QAttachment.attachment;
+import static rsupport.test.domain.notice.entity.QAttachmentEntity.attachmentEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,10 +18,10 @@ public class AttachmentQueryRepositoryImpl implements AttachmentQueryRepository 
 
     @Transactional
     @Override
-    public Long disableAll(Long noticeId, String updateId, LocalDateTime updateDate) {
-        return jpaQueryFactory.update(attachment)
-                .set(List.of(attachment.useYn, attachment.updateId, attachment.updateDate), List.of("N", updateId, updateDate))
-                .where(attachment.notice.id.eq(noticeId).and(attachment.useYn.eq("Y")))
+    public Long disableAllByNoticeId(Long noticeId, String updateId, LocalDateTime updateDate) {
+        return jpaQueryFactory.update(attachmentEntity)
+                .set(List.of(attachmentEntity.useYn, attachmentEntity.updateId, attachmentEntity.updateDate), List.of("N", updateId, updateDate))
+                .where(attachmentEntity.notice.id.eq(noticeId).and(attachmentEntity.useYn.eq("Y")))
                 .execute();
     }
 }

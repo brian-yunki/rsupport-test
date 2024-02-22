@@ -33,6 +33,8 @@ spring:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         default_batch_fetch_size: 100
+        jdbc:
+          time_zone: UTC
 ---
 spring:
   config:
