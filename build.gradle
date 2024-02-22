@@ -38,6 +38,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -45,6 +48,8 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql:1.19.5'
     testImplementation 'io.rest-assured:rest-assured'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 //    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'

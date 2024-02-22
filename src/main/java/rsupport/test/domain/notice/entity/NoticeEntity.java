@@ -1,10 +1,10 @@
 package rsupport.test.domain.notice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import rsupport.test.domain.storage.entity.File;
-import rsupport.test.domain.support.Aduit;
+import rsupport.test.domain.support.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +16,8 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notice extends Aduit {
+//@NoArgsConstructor
+public class NoticeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +42,14 @@ public class Notice extends Aduit {
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
+    @JsonManagedReference
     @Builder.Default
-    @OneToMany(mappedBy = "notice")
-    private List<File> files = new ArrayList<>();
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<NoticeFileEntity> noticeFileEntities = new ArrayList<>();
+
+    public void setNoticeFileEntities(List<NoticeFileEntity> noticeFileEntities) {
+        noticeFileEntities.forEach(file -> file.setNotice(this));
+        this.noticeFileEntities.addAll(noticeFileEntities);
+    }
+
 }

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @ToString
-public abstract class Aduit {
+public abstract class BaseEntity {
 
     @Column(name = "CREATE_ID", nullable = false)
     private String createId;

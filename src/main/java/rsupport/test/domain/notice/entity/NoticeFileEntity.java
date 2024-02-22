@@ -1,18 +1,18 @@
-package rsupport.test.domain.storage.entity;
+package rsupport.test.domain.notice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import rsupport.test.domain.notice.entity.Notice;
-import rsupport.test.domain.support.Aduit;
+import rsupport.test.domain.support.BaseEntity;
 
 @Entity
 @Table(name = "NOTICE_FILE")
-@Getter
+@Getter @Setter
 @SuperBuilder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class File extends Aduit {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class NoticeFileEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +31,9 @@ public class File extends Aduit {
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "NOTICE_ID")
-    private Notice notice;
+    @JoinColumn(name = "NOTICE_ID", nullable = false)
+    private NoticeEntity notice;
 
 }
