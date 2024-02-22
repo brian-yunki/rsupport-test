@@ -1,11 +1,11 @@
 package rsupport.test.domain.support;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,17 +19,20 @@ import java.time.LocalDateTime;
 @ToString
 public abstract class BaseEntity {
 
-    @Column(name = "CREATE_ID", nullable = false)
+    @CreatedBy
+    @Column(name = "CREATE_ID", nullable = false, updatable = false)
     private String createId;
 
     @CreatedDate
     @Column(name = "CREATE_DATE", updatable = false)
     private LocalDateTime createDate;
 
-    @Column(name = "UPDATE_ID")
+    @LastModifiedBy
+    @Column(name = "UPDATE_ID", insertable = false)
     private String updateId;
 
     @LastModifiedDate
     @Column(name = "UPDATE_DATE", insertable = false)
     private LocalDateTime updateDate;
+
 }

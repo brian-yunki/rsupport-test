@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
 import rsupport.test.domain.support.BaseEntity;
 
 import java.time.LocalDateTime;
@@ -12,12 +13,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "NOTICE")
+@DynamicUpdate
 @Getter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@NoArgsConstructor
-public class NoticeEntity extends BaseEntity {
+public class Notice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,17 +40,18 @@ public class NoticeEntity extends BaseEntity {
     @Column(name = "VIEW_COUNT", nullable = false)
     private Long viewCount;
 
+    @Setter
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
     @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<NoticeFileEntity> noticeFileEntities = new ArrayList<>();
+    private List<Attachment> attachments = new ArrayList<>();
 
-    public void setNoticeFileEntities(List<NoticeFileEntity> noticeFileEntities) {
-        noticeFileEntities.forEach(file -> file.setNotice(this));
-        this.noticeFileEntities.addAll(noticeFileEntities);
+    public void setAttachmentList(List<Attachment> noticeAttachmentEntities) {
+        noticeAttachmentEntities.forEach(file -> file.setNotice(this));
+        this.attachments.addAll(noticeAttachmentEntities);
     }
 
 }

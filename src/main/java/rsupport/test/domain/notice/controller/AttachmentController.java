@@ -5,21 +5,21 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rsupport.test.domain.notice.entity.NoticeFileEntity;
-import rsupport.test.domain.notice.service.NoticeFIleService;
+import rsupport.test.domain.notice.entity.Attachment;
+import rsupport.test.domain.notice.service.AttachmentService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/files", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class NoticeFileController {
+public class AttachmentController {
 
-    private final NoticeFIleService noticeFIleService;
+    private final AttachmentService AttachmentService;
 
     @GetMapping("")
-    public List<NoticeFileEntity> getAll() {
-        return noticeFIleService.findAll();
+    public List<Attachment> getAll() {
+        return AttachmentService.findAll();
     }
 
 

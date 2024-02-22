@@ -19,7 +19,8 @@ import static rsupport.test.domain.support.JsonHelper.prettyPrintJsonUsingDefaul
 
 
 @Slf4j
-@Import({TestContainersConfiguration.class, TestNoticeEntityWithTestContainers.class})
+@Import({TestContainersConfiguration.class,
+        TestNoticeWithTestContainers.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TestNoticeControllerWithTestContainers {
@@ -32,7 +33,7 @@ public class TestNoticeControllerWithTestContainers {
 
 
     @Autowired
-    private TestNoticeEntityWithTestContainers entityWithTestContainers;
+    private TestNoticeWithTestContainers testNoticeWithTestContainers;
 
     @BeforeAll
     void init() {
@@ -49,7 +50,7 @@ public class TestNoticeControllerWithTestContainers {
     void get_notice_list() throws JsonProcessingException {
 
         // 데이터 입력
-        entityWithTestContainers.insert_notice_date_with_files();
+        testNoticeWithTestContainers.insert_notice_date_with_files();
 
         // 조회
         String result =
@@ -62,6 +63,12 @@ public class TestNoticeControllerWithTestContainers {
 
         // 확인용 출력 (option)
         log.debug(prettyPrintJsonUsingDefaultPrettyPrinter(result));
+    }
+
+    @Test
+    void delete_notice_by_id() {
+        // 데이터 입력
+        testNoticeWithTestContainers.insert_notice_date_with_files();
     }
 
 
