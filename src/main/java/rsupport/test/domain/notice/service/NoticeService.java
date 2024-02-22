@@ -1,14 +1,11 @@
 package rsupport.test.domain.notice.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import rsupport.test.domain.notice.entity.NoticeEntity;
 import rsupport.test.domain.notice.repository.NoticeRepository;
-import rsupport.test.domain.notice.entity.NoticeFileEntity;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,7 +22,7 @@ public class NoticeService {
      * @return
      */
     public List<NoticeEntity> getAll() {
-        return noticeRepository.findAll();
+        return noticeRepository.findAllByUseYnEqualsIsTrue();
     }
 
     public List<NoticeEntity> getById(Long id) {
