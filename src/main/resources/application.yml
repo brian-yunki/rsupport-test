@@ -5,6 +5,11 @@ spring:
   profiles:
     group:
       default: local
+
+springdoc:
+  swagger-ui.path: /swagger-ui.html
+  api-docs.path: /api-docs
+
 logging:
   level:
     rsupport.test: debug
