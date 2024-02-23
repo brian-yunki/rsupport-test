@@ -1,11 +1,14 @@
 package rsupport.test.domain.notice.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rsupport.test.domain.notice.entity.NoticeEntity;
 import rsupport.test.domain.notice.model.Notice;
+import rsupport.test.domain.notice.model.NoticeSearch;
 import rsupport.test.domain.notice.repository.AttachmentRepository;
 import rsupport.test.domain.notice.repository.NoticeRepository;
 import rsupport.test.domain.support.Converter;
@@ -13,6 +16,7 @@ import rsupport.test.exception.CustomException;
 import rsupport.test.exception.ErrorCode;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -23,12 +27,16 @@ public class NoticeService {
 
     private final AttachmentRepository attachmentRepository;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     /*
      * 리스트조회
      * @return
      */
-    public List<Notice> selectAll() {
-        List<NoticeEntity> entities = noticeRepository.selectAll();
+    public List<Notice> searchBy(Map<String, String> params, Pageable pageable) {
+        NoticeSearch noticeSearch = objectMapper.convertValue(params, NoticeSearch.class);
+
+        List<NoticeEntity> entities = noticeRepository.searchBy(noticeSearch, pageable);
         return Converter.toNoticeModel(entities);
     }
 

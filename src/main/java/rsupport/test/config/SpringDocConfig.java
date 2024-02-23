@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
-import rsupport.test.domain.notice.entity.AttachmentEntity;
-import rsupport.test.domain.notice.entity.NoticeEntity;
 
 import java.util.Map;
 

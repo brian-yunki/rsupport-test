@@ -1,0 +1,25 @@
+server:
+  shutdown: graceful
+  error:
+    include-stacktrace: never
+    include-exception: false
+    whitelabel.enabled: false
+
+spring:
+  lifecycle.timeout-per-shutdown-phase: 20s
+
+---
+spring:
+  config.activate.on-profile: local
+logging:
+  level:
+    rsupport.test: debug
+    org.hibernate.type.descriptor.sql: trace
+
+---
+spring:
+  config.activate.on-profile: sandbox
+logging:
+  level:
+    rsupport.test: info
+    org.hibernate.type.descriptor.sql: info

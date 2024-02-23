@@ -1,28 +1,15 @@
-server:
-  shutdown: graceful
-  error:
-    include-stacktrace: never
-    include-exception: false
-    whitelabel.enabled: false
-
 spring:
   config:
     import:
+      - application-common.yml
       - application-mysql.yml
+      - application-springdoc.yml
   profiles:
     group:
       default: local
-  lifecycle:
-    timeout-per-shutdown-phase: 20s
+      sandbox: sandbox
 
 
-springdoc:
-  swagger-ui.path: /swagger-ui.html
-  api-docs.path: /api-docs
 
-logging:
-  level:
-    rsupport.test: debug
-    org.hibernate.type.descriptor.sql: trace
 
 
