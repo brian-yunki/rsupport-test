@@ -1,6 +1,7 @@
 package rsupport.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.testcontainers.containers.MySQLContainer;
 
+import java.util.function.Function;
+
 import static io.restassured.RestAssured.given;
-import static rsupport.test.domain.support.JsonHelper.prettyPrintJsonUsingDefaultPrettyPrinter;
 
 
 @Slf4j
@@ -62,7 +64,7 @@ public class TestNoticeControllerWithTestContainersEntity {
                 .asString();
 
         // 확인용 출력 (option)
-        log.debug(prettyPrintJsonUsingDefaultPrettyPrinter(result));
+        log.debug(prettyPrintJson.apply(result));
     }
 
     @Test
@@ -71,5 +73,13 @@ public class TestNoticeControllerWithTestContainersEntity {
         testNoticeWithTestContainers.insert_notice_date_with_files();
     }
 
-
+    Function<String, String> prettyPrintJson = (in) -> {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Object jsonObject = objectMapper.readValue(in, Object.class);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonObject);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    };
 }

@@ -9,6 +9,8 @@ import rsupport.test.domain.notice.model.Notice;
 import rsupport.test.domain.notice.repository.AttachmentRepository;
 import rsupport.test.domain.notice.repository.NoticeRepository;
 import rsupport.test.domain.support.Converter;
+import rsupport.test.exception.CustomException;
+import rsupport.test.exception.ErrorCode;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class NoticeService {
        NoticeEntity noticeEntity = noticeRepository.selectById(id).stream()
                .findFirst()
                .filter(e -> !"N".equals(e.getUseYn()))
-               .orElseThrow(() -> new RuntimeException("존재하지 않는 공지입니다."));
+               .orElseThrow(() -> new CustomException(ErrorCode.SERVER_ERROR, "존재하지 않는 공지입니다."));
        return Converter.toNoticeModel(List.of(noticeEntity)).getFirst();
     }
 
@@ -52,23 +54,33 @@ public class NoticeService {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id) {
         NoticeEntity noticeEntity = noticeRepository.findById(id).stream()
                 .findFirst()
-                .filter(e -> !"N".equals(e.getUseYn()))
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 공지입니다."));
-
-        noticeEntity.setUseYn("N");
+                .filter(entity -> !"N".equals(entity.getUseYn()))
+                .map(entity -> {
+                    entity.setUseYn("N");
+                    return entity;
+                })
+                .orElseThrow(() -> new CustomException(ErrorCode.BAD_REQUEST, "글이 삭제되었거나 존재하지 않습니다"));
+        // 반듯이
         noticeRepository.flush();
 
-        Long result = attachmentRepository.disableAllByNoticeId(noticeEntity.getId(), noticeEntity.getUpdateId(), noticeEntity.getUpdateDate());
+        // 첨부파일 벌크업데이트
+        //        noticeEntity.getNoticeFileEntities().forEach(e -> e.setUseYn("N")); // N번 쿼리로 변경
+        attachmentRepository.disableAllByNoticeId(noticeEntity.getId(), noticeEntity.getUpdateId(), noticeEntity.getUpdateDate());
         attachmentRepository.flush();
-//        noticeEntity.getNoticeFileEntities().forEach(e -> e.setUseYn("N"));
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void save(Notice notice) {
+        noticeRepository.saveAll(Converter.toNoticeEntities(List.of(notice)));
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Notice notice) {
         noticeRepository.saveAll(Converter.toNoticeEntities(List.of(notice)));
     }
 

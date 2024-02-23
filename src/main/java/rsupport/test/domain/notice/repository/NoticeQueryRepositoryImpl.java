@@ -32,6 +32,14 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
     }
 
 
+    public Long count(Long id) {
+        return jpaQueryFactory.select(noticeEntity.count())
+                .from(noticeEntity)
+                .where(noticeEntity.id.eq(id))
+                .fetchOne();
+    }
+
+
     @Transactional
     @Override
     public Long updateCount(Long id) {
@@ -41,6 +49,8 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
                 .execute();
 
     }
+
+
 
 
 }

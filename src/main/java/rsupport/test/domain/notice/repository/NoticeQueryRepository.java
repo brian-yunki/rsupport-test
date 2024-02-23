@@ -15,4 +15,6 @@ public interface NoticeQueryRepository {
 
     Long updateCount(Long id);
 
+    Long count(Long id);
+
 }
