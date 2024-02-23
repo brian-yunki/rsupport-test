@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import rsupport.test.domain.support.BaseEntity;
+import rsupport.test.support.BaseEntity;
 
 @Entity
 @Table(name = "NOTICE_FILE")

@@ -1,4 +1,4 @@
-package rsupport.test.domain.support;
+package rsupport.test.support;
 
 import jakarta.persistence.*;
 import lombok.*;

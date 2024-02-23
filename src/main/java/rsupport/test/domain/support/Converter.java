@@ -4,9 +4,6 @@ import rsupport.test.domain.notice.entity.AttachmentEntity;
 import rsupport.test.domain.notice.entity.NoticeEntity;
 import rsupport.test.domain.notice.model.Attachment;
 import rsupport.test.domain.notice.model.Notice;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -3,6 +3,8 @@ package rsupport.test.domain.notice.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +35,13 @@ public class NoticeService {
      * 리스트조회
      * @return
      */
-    public List<Notice> searchBy(Map<String, String> params, Pageable pageable) {
+    public Page<Notice> searchBy(Map<String, String> params, Pageable pageable) {
         NoticeSearch noticeSearch = objectMapper.convertValue(params, NoticeSearch.class);
+        List<Notice> notices = Converter.toNoticeModel(noticeRepository.searchBy(noticeSearch, pageable));
+        Long count = noticeRepository.searchByCount(noticeSearch);
 
-        List<NoticeEntity> entities = noticeRepository.searchBy(noticeSearch, pageable);
-        return Converter.toNoticeModel(entities);
+        return new PageImpl<>(notices, pageable, count);
+//        return Converter.toNoticeModel(entities);
     }
 
     public Notice selectById(Long id) {

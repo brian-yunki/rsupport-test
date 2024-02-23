@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import rsupport.test.domain.support.BaseEntity;
+import rsupport.test.support.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

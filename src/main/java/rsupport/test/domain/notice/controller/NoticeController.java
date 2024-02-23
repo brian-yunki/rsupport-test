@@ -3,10 +3,10 @@ package rsupport.test.domain.notice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -38,7 +38,7 @@ public class NoticeController {
             }
     )
     @GetMapping("")
-    public List<Notice> searchBy(@Nullable @Parameter(hidden = true) @RequestParam Map<String, String> params,
+    public Page<Notice> searchBy(@Parameter(hidden = true) @Nullable @RequestParam Map<String, String> params,
                                  @PageableDefault(page = 0, size = 10)
                                  @SortDefault.SortDefaults({@SortDefault(sort = "createDate", direction = Sort.Direction.DESC)}) Pageable pageable) {
         return noticeService.searchBy(params, pageable);

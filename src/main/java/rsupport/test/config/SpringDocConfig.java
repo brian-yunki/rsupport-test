@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -55,7 +56,8 @@ public class SpringDocConfig {
                 .addRequestWrapperToIgnore(
                         Pageable.class,
                         Specification.class,
-                        Map.class
+                        Map.class,
+                        RequestParam.class
                 )
         ;
     }
