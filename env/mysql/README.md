@@ -6,6 +6,9 @@
 - Install Docker Desktop or Docker Engine 
 - Install docker-compose
 
-#### Execute
+#### Execute (Command Line Interface)
 start : `docker-compose -f mysql-compose.yml up -d`  
 stop&remove : `docker-compose -f mysql-compose.yml down`
+
+### Execute (spring-boot-docker-compose dependency)
+start & stop : in IDE

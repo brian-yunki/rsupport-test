@@ -37,6 +37,18 @@ storage:
 ---
 spring:
   config.activate.on-profile: local
+  docker:
+    compose:
+      file: ./env/mysql/mysql-compose.yml
+      lifecycle-management: start_and_stop
+      start:
+        command: up
+      stop:
+        command: stop
+        timeout: 1m
+      skip:
+        in-tests: false
+
 logging:
   level:
     rsupport.test: debug

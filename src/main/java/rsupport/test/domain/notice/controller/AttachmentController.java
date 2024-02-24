@@ -17,7 +17,7 @@ import java.util.List;
 
 @Tag(name = "첨부파일")
 @RestController
-@RequestMapping(value = "/files")
+@RequestMapping(value = "/files", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class AttachmentController {
 
@@ -25,13 +25,13 @@ public class AttachmentController {
 
 
     // get attachment
-    @GetMapping(value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id:[0-9]*}")
     public Attachment get(@PathVariable("id") Long id) {
         return attachmentService.selectById(id);
     }
 
     // upload
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Upload> upload(@RequestPart("files") List<MultipartFile> files) {
         return attachmentService.storeFiles(files);
     }
@@ -48,8 +48,4 @@ public class AttachmentController {
                 .header(HttpHeaders.TRANSFER_ENCODING, "binary")
                 .body(download.getResource());
     }
-
-
-
-
  }
