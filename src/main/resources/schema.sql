@@ -1,8 +1,28 @@
+-- 테이블 생성 SQL - MEMBER
+CREATE TABLE IF NOT EXISTS MEMBER
+(
+    `ID`           INT UNSIGNED     NOT NULL    AUTO_INCREMENT COMMENT '아이디',
+    `USER_ID`      VARCHAR(50)      NOT NULL    COMMENT '사용자 아이디',
+    `NAME`         VARCHAR(100)     NOT NULL    COMMENT '이름',
+    `ROLE`         VARCHAR(50)      NOT NULL    COMMENT '권한',
+    `CREATE_ID`    VARCHAR(50)      NOT NULL    COMMENT '등록 아이디',
+    `CREATE_DATE`  DATETIME         NOT NULL    COMMENT '등록 일',
+    `UPDATE_ID`    VARCHAR(50)      NULL        COMMENT '수정 아이디',
+    `UPDATE_DATE`  DATETIME         NULL        COMMENT '수정 일',
+    `PASSWORD`     VARCHAR(500)     NOT NULL    COMMENT '비밀번호',
+    `USE_YN`       CHAR(1)          NOT NULL    COMMENT '사용 여부',
+    PRIMARY KEY (ID)
+);
+
+-- 테이블 Comment 설정 SQL - MEMBER
+ALTER TABLE MEMBER COMMENT '사용자';
+
+
 -- 테이블 생성 SQL - NOTICE
 CREATE TABLE IF NOT EXISTS NOTICE
 (
     `ID`           INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '아이디',
-    `TITLE`        VARCHAR(50)     NOT NULL    COMMENT '제목. 제목',
+    `TITLE`        VARCHAR(100)     NOT NULL    COMMENT '제목. 제목',
     `SUBJECT`      MEDIUMTEXT      NOT NULL    COMMENT '내용. 내용',
     `START_DATE`   DATETIME        NOT NULL    COMMENT '시작 일',
     `END_DATE`     DATETIME        NOT NULL    COMMENT '종료 일',
@@ -24,7 +44,7 @@ CREATE TABLE IF NOT EXISTS NOTICE_FILE
 (
     `ID`           INT UNSIGNED    NOT NULL    AUTO_INCREMENT COMMENT '아이디',
     `NOTICE_ID`    INT UNSIGNED    NOT NULL    COMMENT '공지 아이디',
-    `NAME`         VARCHAR(50)     NOT NULL    COMMENT '이름',
+    `NAME`         VARCHAR(100)    NOT NULL    COMMENT '이름',
     `PATH`         VARCHAR(50)     NOT NULL    COMMENT '경로',
     `SIZE`         INT UNSIGNED    NOT NULL    COMMENT '크기',
     `USE_YN`       CHAR(1)         NOT NULL    DEFAULT 'Y' COMMENT '사용 여부',

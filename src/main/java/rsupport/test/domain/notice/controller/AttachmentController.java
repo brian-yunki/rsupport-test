@@ -1,5 +1,7 @@
 package rsupport.test.domain.notice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -30,7 +32,9 @@ public class AttachmentController {
         return attachmentService.selectById(id);
     }
 
+
     // upload
+    @Operation(summary = "업로드", security = {@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)})
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<Upload> upload(@RequestPart("files") List<MultipartFile> files) {
         return attachmentService.storeFiles(files);
@@ -38,6 +42,7 @@ public class AttachmentController {
 
 
     // download
+    @Operation(summary = "다운로드")
     @GetMapping(value = "/download/{filename}")
     public ResponseEntity<Resource> download(@PathVariable("filename") String filename) {
         Download download = attachmentService.loadFile(filename);

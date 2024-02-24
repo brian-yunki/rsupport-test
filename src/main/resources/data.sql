@@ -1,0 +1,1 @@
+# INSERT INTO MEMBER (USER_ID, NAME, ROLE, CREATE_ID, CREATE_DATE, PASSWORD, USE_YN) VALUES ('rsupport', 'jeon.yunki', 'ADMIN', 'system', NOW(), '$2a$12$o.KYu4JH2jwFdCU1TPJhAuRgs50A.j3VfyKmJcLZCHmA4oQjAKmDy', 'Y');

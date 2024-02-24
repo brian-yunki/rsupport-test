@@ -34,6 +34,13 @@ storage:
     - application/x-hwp
     - application/vnd.hancom.hwpx
     - application/haansofthwpx
+
+jwt:
+  access-token-expires-in: 1800000 # 30min (1000L * 60 * 30)
+  refresh-token-expires-in: 604800000 # 7day (1000L * 60 * 60 * 24 * 7)
+  secret: Fr2OrGWctOX4vRp4/osmk6uedZ+/7HQuXqXhsVcskg3Yo0r3U0q2sp/0BzLHPc5ZUxwSm9LQzedsmOlatir05N+h2xxhCPPlbZ8M+dY2Ui4OUhTdgLt3E2EeyRbmA2/DGQqZXAlT5pPay/er9GpiVJ9J66x/Nmlsw8SgUVxEkd9Vrvzowi7O5sns9vI1d71dU7tQuUnP+HZHkZbIjLXengpj7we7DGZqT511ckhciLX+ByFMYn6S2CxfGmGjsldoyL/8Jr+zYgNEReOkMrZWWTno1tJa3ghcVzSzbBZS8/Vi1BY+3sEnikunpscsC+Q35PjnGCs38UHsinjViUDcZQ==
+
+
 ---
 spring:
   config.activate.on-profile: local

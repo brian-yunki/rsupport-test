@@ -2,7 +2,6 @@ package rsupport.test.support.advice;
 
 import io.micrometer.common.lang.NonNull;
 import org.springframework.core.MethodParameter;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -45,7 +44,7 @@ public class SuccessBodyAdvice implements ResponseBodyAdvice<Object>  {
                     .build();
 
         }
-        // file download
+        // for inputstream (file download)
         else if (body instanceof Resource) {
             return body;
         }

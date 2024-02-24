@@ -3,6 +3,7 @@ package rsupport.test.domain.notice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +59,7 @@ public class NoticeController {
         return noticeService.selectNoticeFiles(id);
     }
 
-    @Operation(summary = "공지글 저장하기")
+    @Operation(summary = "공지사항 저장", security = {@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)})
     @PostMapping("")
     public void save(@Valid @RequestBody Notice notice) {
         noticeService.save(notice);
@@ -67,7 +69,7 @@ public class NoticeController {
 
     }
 
-    @Operation(summary = "공지글 삭제하기")
+    @Operation(summary = "공지사항 삭제", security = {@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)})
     @DeleteMapping("/{id:[0-9]*}")
     public void delete(@PathVariable Long id) {
          noticeService.deleteById(id);

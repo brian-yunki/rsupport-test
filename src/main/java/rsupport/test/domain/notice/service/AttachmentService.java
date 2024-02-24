@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import rsupport.test.config.StorageConfig;
+import rsupport.test.config.StorageProperties;
 import rsupport.test.domain.notice.entity.AttachmentEntity;
 import rsupport.test.domain.notice.model.Attachment;
 import rsupport.test.domain.notice.model.Download;
@@ -20,9 +20,7 @@ import rsupport.test.exception.CustomException;
 import rsupport.test.exception.ErrorCode;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,13 +35,13 @@ import static rsupport.test.support.Utils.calculatedPoolSize;
 
 @Service
 @RequiredArgsConstructor
-@EnableConfigurationProperties(StorageConfig.class)
+@EnableConfigurationProperties(StorageProperties.class)
 public class AttachmentService {
 
     private final AttachmentRepository attachmentRepository;
 
     // XNIX system default (/var/tmp : automatically deleted after one month)
-    private final StorageConfig storageConfig;
+    private final StorageProperties storageProperties;
 
 
 
@@ -58,8 +56,8 @@ public class AttachmentService {
 
     // store multipart files ( default /var/tmp/rsupport)
     public List<Upload> storeFiles(List<MultipartFile> files) {
-        List<String> extensions = storageConfig.getAllowFileExtension();
-        List<String> mimeTypes = storageConfig.getAllowMimeType();
+        List<String> extensions = storageProperties.getAllowFileExtension();
+        List<String> mimeTypes = storageProperties.getAllowMimeType();
         // 확장자
         if (!checkAllowFileExtension.apply(files, extensions)) {
             throw new CustomException(ErrorCode.BAD_REQUEST, "지원하는 확장자는 " + String.join(",", extensions) + " 입니다");
@@ -81,7 +79,7 @@ public class AttachmentService {
                                 try {
                                     assert filename != null;
                                     String storedname = UUID.randomUUID() + "." + extension;
-                                    file.transferTo(new File(Paths.get(storageConfig.getPath(), storedname).toString())); // Check system 'ulimit' setting.
+                                    file.transferTo(new File(Paths.get(storageProperties.getPath(), storedname).toString())); // Check system 'ulimit' setting.
                                     return Upload.builder()
                                             .name(filename).path(path + storedname).size(file.getSize())
                                             .build();
@@ -99,7 +97,7 @@ public class AttachmentService {
     // load file from storage
     public Download loadFile(String filename) {
         try {
-            Path file = Paths.get(storageConfig.getPath()).resolve(filename).normalize();
+            Path file = Paths.get(storageProperties.getPath()).resolve(filename).normalize();
             // TODO. #1-1. check stored files from database
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {

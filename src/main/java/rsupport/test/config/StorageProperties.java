@@ -8,7 +8,7 @@ import java.util.List;
 
 @ConfigurationProperties(prefix = "storage")
 @Getter @Setter
-public class StorageConfig {
+public class StorageProperties {
     private String path;
     private List<String> allowFileExtension;
     private List<String> allowMimeType;
