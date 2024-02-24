@@ -15,6 +15,9 @@ import rsupport.test.support.model.Response;
 
 @RestControllerAdvice(basePackages = {"rsupport.test.domain.notice.controller"})
 public class SuccessBodyAdvice implements ResponseBodyAdvice<Object>  {
+
+    private static final String SUCCESS_MESSAGE = "success";
+
     @Override
     public boolean supports(@NonNull MethodParameter returnType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
@@ -38,12 +41,12 @@ public class SuccessBodyAdvice implements ResponseBodyAdvice<Object>  {
                             .first(page.isFirst())
                             .last(page.isLast())
                             .build())
-                    .message("success")
+                    .message(SUCCESS_MESSAGE)
                     .build();
         } else if (body instanceof InputStreamResource) {
             return body;
         }
 
-        return Response.builder().message("success").content(body).build();
+        return Response.builder().message(SUCCESS_MESSAGE).content(body).build();
     }
 }

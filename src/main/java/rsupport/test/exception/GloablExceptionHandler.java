@@ -1,7 +1,5 @@
 package rsupport.test.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +20,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GloablExceptionHandler {
+
+    private static final String ERROR_KEY_TIMESTAMP = "timestamp";
+    private static final String ERROR_KEY_STATUS = "status";
+    private static final String ERROR_KEY_MESSAGE = "message";
+
     @ExceptionHandler({CustomException.class})
     public ResponseEntity<Map<String, Object>> handleCustomException(CustomException ex) {
         HttpStatus status = ex.getErrorCode().getStatus();
@@ -58,9 +61,9 @@ public class GloablExceptionHandler {
      */
     private final BiFunction<HttpStatus, Object, Map<String, Object>> errorResponse = (status, message) -> {
         Map<String, Object> errorAttribute = new LinkedHashMap<>();
-        errorAttribute.put("timestamp", LocalDateTime.now());
-        errorAttribute.put("status", status.value());
-        errorAttribute.put("message", message);
+        errorAttribute.put(ERROR_KEY_TIMESTAMP, LocalDateTime.now());
+        errorAttribute.put(ERROR_KEY_STATUS, status.value());
+        errorAttribute.put(ERROR_KEY_MESSAGE, message);
         return errorAttribute;
     };
 
