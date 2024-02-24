@@ -1,5 +1,8 @@
 package rsupport.test.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -7,6 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,6 +34,15 @@ public class GloablExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse.apply(HttpStatus.BAD_REQUEST, extractErrorResult.apply(ex.getBindingResult())));
     }
 
+
+    @ExceptionHandler({
+            MaxUploadSizeExceededException.class,
+            FileSizeLimitExceededException.class
+    })
+    public ResponseEntity<Map<String, Object>> handleMaxSizeException(MaxUploadSizeExceededException ex) {
+        return new ResponseEntity<>(errorResponse.apply(HttpStatus.PAYLOAD_TOO_LARGE, "한 파일은 50MB이하. 전체 파일은 200MB까지 업로드가 가능합니다."), HttpStatus.PAYLOAD_TOO_LARGE);
+    }
+
     /*
      * Extract binding result
      */
@@ -39,7 +53,7 @@ public class GloablExceptionHandler {
             );
 
 
-    /*
+    /*전체
      * Make error response
      */
     private final BiFunction<HttpStatus, Object, Map<String, Object>> errorResponse = (status, message) -> {

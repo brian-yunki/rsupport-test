@@ -39,7 +39,7 @@ public class SpringDocConfig {
 //                                .type(SecurityScheme.Type.HTTP)
 //                                .scheme("Basic")
 //                )
-                // 인증헤더 설정
+                // AUTHORIZATION
                 .addSecuritySchemes(HttpHeaders.AUTHORIZATION,
                         new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)

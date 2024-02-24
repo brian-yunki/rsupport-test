@@ -6,8 +6,34 @@ server:
     whitelabel.enabled: false
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 200MB
   lifecycle.timeout-per-shutdown-phase: 20s
 
+storage:
+  path: /var/tmp/rsupport
+  allow-file-extension: jpg, jpeg, png, xls, xlsx, doc, docx, ppt, pptx, hwp, hwpx, pdf
+  allow-mime-type:
+    - application/vnd.ms-excel
+    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    - application/vnd.openxmlformats-officedocument.presentationml.presentation
+    - application/vnd.ms-powerpoint
+    - application/msword
+    - application/pdf
+    - image/jpeg
+    - image/x-citrix-jpeg
+    - image/pjpeg
+    - image/png
+    - image/x-citrix-png
+    - image/x-png
+    - application/vnd.hancom.hwp
+    - application/haansofthwp
+    - application/x-hwp
+    - application/vnd.hancom.hwpx
+    - application/haansofthwpx
 ---
 spring:
   config.activate.on-profile: local

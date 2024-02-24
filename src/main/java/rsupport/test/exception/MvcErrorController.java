@@ -21,6 +21,7 @@ public class MvcErrorController extends AbstractErrorController {
         super(errorAttributes);
     }
 
+    // replace spring mvc error page .
     @RequestMapping(value = "${server.error.path:${error.path:/error}}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> customError(HttpServletRequest request) {
         HttpStatus httpStatus = getStatus(request);

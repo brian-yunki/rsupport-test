@@ -14,6 +14,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import rsupport.test.domain.notice.model.Attachment;
 import rsupport.test.domain.notice.model.Notice;
 import rsupport.test.domain.notice.service.NoticeService;
 
@@ -38,7 +39,7 @@ public class NoticeController {
             }
     )
     @GetMapping("")
-    public Page<Notice> searchBy(@Parameter(hidden = true) @Nullable @RequestParam Map<String, String> params,
+    public Page<Notice> search(@Parameter(hidden = true) @Nullable @RequestParam Map<String, String> params,
                                  @PageableDefault(page = 0, size = 10)
                                  @SortDefault.SortDefaults({@SortDefault(sort = "createDate", direction = Sort.Direction.DESC)}) Pageable pageable) {
         return noticeService.searchBy(params, pageable);
@@ -46,8 +47,14 @@ public class NoticeController {
 
     @Operation(summary = "공지글 가져오기")
     @GetMapping("/{id:[0-9]*}")
-    public Notice getById(@PathVariable("id") Long id) {
+    public Notice get(@PathVariable("id") Long id) {
         return noticeService.selectById(id);
+    }
+
+    @Operation(summary = "공지파일 가져오기")
+    @GetMapping("/{id:[0-9]*}/files")
+    public List<Attachment> getNoticeFiles(@PathVariable("id") Long id) {
+        return noticeService.selectNoticeFiles(id);
     }
 
     @Operation(summary = "공지글 저장하기")
@@ -62,8 +69,9 @@ public class NoticeController {
 
     @Operation(summary = "공지글 삭제하기")
     @DeleteMapping("/{id:[0-9]*}")
-    public void delteById(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
          noticeService.deleteById(id);
     }
+
 
 }

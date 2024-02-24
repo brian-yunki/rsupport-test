@@ -1,0 +1,35 @@
+### 공지사항 조회 (검색)
+GET http://localhost:8080/notices
+
+### 공지사항 조회 (검색 - 페이징)
+GET http://localhost:8080/notices?page=0&size=100
+
+### 공지사항 상세조회
+GET http://localhost:8080/notices/99
+
+### 공지사항 삭제
+DELETE http://localhost:8080/notices/99
+
+### 공지사항 등록
+POST http://localhost:8080/notices
+Content-Type: application/json
+
+{
+	"title": "TEST5",
+  	"subject": "테스트5",
+  	"startDate": "2024-02-22T08:52:55",
+  	"endDate": "2024-02-22T08:52:55",
+  	"attachments": [
+      	{
+          	"name": "TEST1",
+          	"path": "/tmp/df564e84-75a3-4afd-9fd0-14476b25ea9d.png",
+          	"size": 2048
+        },
+      	{
+          	"name": "TEST1",
+          	"path": "/tmp/c2a2beff-39e0-43b8-9ed2-db4fd070cf20.png",
+          	"size": 2048
+        }
+	]
+}
+

@@ -23,7 +23,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    // notiec orderby condition
+    // create notice search orderby condition
     Function<Pageable, OrderSpecifier<?>> orderBy = (pageable) -> {
         if (pageable.getSort().isEmpty())
             return null;
@@ -36,7 +36,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
         return null;
     };
 
-    // Notice search condition
+    // create notice search condition
     Function<NoticeSearch, BooleanBuilder> condition = (condition) -> {
         BooleanBuilder builder = new BooleanBuilder();
         if (hasText(condition.getTitle())) {
@@ -49,6 +49,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
     };
 
 
+    // search notice with search condition
     public List<NoticeEntity> searchBy(NoticeSearch noticeSearch, Pageable pageable) {
         return jpaQueryFactory.selectFrom(noticeEntity)
                 .innerJoin(noticeEntity.attachments)
@@ -60,6 +61,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
                 .fetch();
     }
 
+    // search notice count with search condition
     public Long searchByCount(NoticeSearch noticeSearch) {
         return jpaQueryFactory.select(noticeEntity.count())
                 .from(noticeEntity)
@@ -67,6 +69,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
                 .fetchOne();
     }
 
+    // select notice by notice id
     public Optional<NoticeEntity> selectById(Long id) {
         return Optional.ofNullable(jpaQueryFactory.selectFrom(noticeEntity)
                 .innerJoin(noticeEntity.attachments)
@@ -75,6 +78,7 @@ public class NoticeQueryRepositoryImpl implements NoticeQueryRepository {
                 .fetchOne());
     }
 
+    //
     @Transactional
     @Override
     public Long updateCount(Long id) {

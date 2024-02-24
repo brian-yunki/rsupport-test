@@ -9,9 +9,12 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter @Setter
+@Schema(name = "Attachment", description = "첨부파일")
 public class Attachment {
 
+    @Schema(name = "id", description = "첨부파일 아이디")
     private Long id;
+
     @NotBlank(message = "파일이름은 필수 입니다")
     @Schema(name = "name", description = "파일이름")
     private String name;
@@ -38,4 +41,6 @@ public class Attachment {
 
     @Schema(name = "updateDate", description = "수정일")
     private LocalDateTime updateDate;
+
+    private Long noticeId;
 }

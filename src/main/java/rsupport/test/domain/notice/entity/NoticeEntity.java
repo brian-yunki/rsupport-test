@@ -1,11 +1,10 @@
 package rsupport.test.domain.notice.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import rsupport.test.support.BaseEntity;
+import rsupport.test.support.entity.BaseEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class NoticeEntity extends BaseEntity {
     @Column(name = "USE_YN", nullable = false)
     private String useYn;
 
-    @JsonManagedReference
     @Builder.Default
     @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AttachmentEntity> attachments = new ArrayList<>();

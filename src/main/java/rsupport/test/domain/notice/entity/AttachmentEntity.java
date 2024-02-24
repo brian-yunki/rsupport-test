@@ -1,11 +1,10 @@
 package rsupport.test.domain.notice.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
-import rsupport.test.support.BaseEntity;
+import rsupport.test.support.entity.BaseEntity;
 
 @Entity
 @Table(name = "NOTICE_FILE")
@@ -35,7 +34,6 @@ public class AttachmentEntity extends BaseEntity {
     private String useYn;
 
     @Setter
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "NOTICE_ID", nullable = false)
     private NoticeEntity notice;

@@ -1,4 +1,4 @@
-package rsupport.test.support;
+package rsupport.test.support.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

@@ -11,6 +11,6 @@ public class AuditorAwareImpl implements AuditorAware<String>  {
         // SpringSecurity 의 사용자 정보를 가져와 전달할 수 있도록 구현해야 하지만 이 과제에서는 생략
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        authentication.getPrincipal();
-        return Optional.ofNullable("jeon.yunki");
+        return Optional.of("jeon.yunki");
     }
 }
