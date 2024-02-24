@@ -12,6 +12,8 @@ public interface AttachmentQueryRepository {
 
     Optional<AttachmentEntity> selectById(Long id);
 
+    Long selectByFilePath(String path);
+
     List<AttachmentEntity> selectByNoticeId(Long id);
 
     void disableAllByNoticeId(Long noticeId, String updateId, LocalDateTime updateDate);

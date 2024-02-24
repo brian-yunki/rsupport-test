@@ -3,6 +3,7 @@ package rsupport.test.support.advice;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -30,7 +31,6 @@ public class SuccessBodyAdvice implements ResponseBodyAdvice<Object>  {
                                   @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response)
     {
         if (body instanceof Page<?> page) {
-//            return body;
             return Response.builder()
                     .content(page.getContent())
                     .pageable(Pageable.builder()
@@ -43,7 +43,10 @@ public class SuccessBodyAdvice implements ResponseBodyAdvice<Object>  {
                             .build())
                     .message(SUCCESS_MESSAGE)
                     .build();
-        } else if (body instanceof InputStreamResource) {
+
+        }
+        // file download
+        else if (body instanceof Resource) {
             return body;
         }
 

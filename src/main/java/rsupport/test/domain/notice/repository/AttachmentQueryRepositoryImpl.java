@@ -29,6 +29,16 @@ public class AttachmentQueryRepositoryImpl implements AttachmentQueryRepository 
     }
 
 
+    public Long selectByFilePath(String path) {
+        return jpaQueryFactory.select(attachmentEntity.count())
+                .from(attachmentEntity)
+                .where(attachmentEntity.path.contains(path).and(attachmentEntity.useYn.eq("Y")))
+                .fetchOne();
+    }
+
+
+
+
     // select attachment list by notice id
     public List<AttachmentEntity> selectByNoticeId(Long id) {
         return jpaQueryFactory.selectFrom(attachmentEntity)
