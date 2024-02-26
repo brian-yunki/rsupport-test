@@ -96,7 +96,7 @@ Springboot docker compose 를 사용하는 것이좋 좋을 것 같습니다.
 
 
 
-## 실행방법 (intellij)
+## :gear: 실행방법 (intellij)
 
 ### 사전준비 
 1. docker 설치 (brew install --cask docker) 또는 Docker desktop 설치 
