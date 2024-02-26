@@ -96,10 +96,29 @@ Springboot docker compose 를 사용하는 것이좋 좋을 것 같습니다.
 
 
 
-## 실행방법
+## 실행방법 (intellij)
 
-1. Git checkout 
-2. 
+### 사전준비 
+1. docker 설치 (brew install --cask docker) 또는 Docker desktop 설치 
+2. docker-compose 설치 (brew install docker-compose )
+3. java 설치 (brew install --cask temurin21)
+4. 체크아웃 : https://github.com/brian-yunki/rsupport-test.git
+5. 프로젝트 로드 (intellij) 
+
+### 실행방법 
+1. intellij (IDE) 실행  
+   - 실행시 사용자 계정이 입력되지 않습니다. 
+   - data.sql 을 별도로 실행하여 사용자 계정이 입력될 수 있도록 해야 합니다. 
+
+### 테스트 방법 
+1. 로그인 토큰   
+   swagger-ui : https://localhost:8080/swagger-ui.html 에 접속하여 /login api 로 로그인 토큰을 받습니다. 
+2. API 테스트 
+   인증헤더에 토큰을 입력하고 실행합니다. (POST/DELTE 만 해당합니다)
+
+
+### 미구현 사항
+- 공지사항의 공지글 업데이트 기능은 구현되어 있지 않습니다. Redis cache 를 적용하여 view count 처리를 진행하려 했으나 미비했습니다. 
 
 
 
