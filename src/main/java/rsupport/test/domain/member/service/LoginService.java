@@ -20,7 +20,8 @@ public class LoginService {
     public Token authenticate(Account account) throws AuthenticationException {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(account.getUserId(), account.getPassword()));
-        // after.
+
+        // (authenticate) after.
         // 1. provider.retrieveUser -> detailservice.loadUserByUsername
         // 2. provider.additionalAuthenticationChecks (password validate check)
 

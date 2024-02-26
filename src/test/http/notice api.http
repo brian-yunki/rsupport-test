@@ -1,18 +1,28 @@
 ### 공지사항 조회 (검색)
 GET http://localhost:8080/notices
+Content-Type: application/json
+
 
 ### 공지사항 조회 (검색 - 페이징)
 GET http://localhost:8080/notices?page=0&size=100
+Content-Type: application/json
+
 
 ### 공지사항 상세조회
-GET http://localhost:8080/notices/99
+GET http://localhost:8080/notices/255
+Content-Type: application/json
+
 
 ### 공지사항 삭제
-DELETE http://localhost:8080/notices/99
+DELETE http://localhost:8080/notices/100
+Content-Type: application/json
+Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyc3VwcG9ydCIsImlhdCI6MTcwODc4OTYyOCwiZXhwIjoxNzA4NzkxNDI4LCJqdGkiOiI2NDM1ZTQyOS03ZTA4LTQ5ZjktOTJjZi0xNjhiNTZiNzZlNGYiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJ1c2VyaWQiOiJyc3VwcG9ydCJ9.CvY-RN08I7qCq6dd3y5xczzbcwk9eh8jLUUbnWf8PMI
+
 
 ### 공지사항 등록
 POST http://localhost:8080/notices
 Content-Type: application/json
+Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyc3VwcG9ydCIsImlhdCI6MTcwODc4OTYyOCwiZXhwIjoxNzA4NzkxNDI4LCJqdGkiOiI2NDM1ZTQyOS03ZTA4LTQ5ZjktOTJjZi0xNjhiNTZiNzZlNGYiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJ1c2VyaWQiOiJyc3VwcG9ydCJ9.CvY-RN08I7qCq6dd3y5xczzbcwk9eh8jLUUbnWf8PMI
 
 {
 	"title": "TEST5",

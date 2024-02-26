@@ -1,9 +1,29 @@
 server:
   shutdown: graceful
+  forward-headers-strategy: framework
+  tomcat:
+    remoteip:
+      host-header: X-Forwarded-Host
+      port-header: X-Forwarded-Port
+      protocol-header: X-Forwarded-Proto
+      remote-ip-header: X-Forwarded-For
+    threads:
+      max: 200
+      min-spare: 10
+    accept-count: 100
   error:
     include-stacktrace: never
     include-exception: false
     whitelabel.enabled: false
+  compression.enabled: true
+  ssl:
+    key-store: ./env/key/keystore.p12
+    key-store-type: PKCS12
+    key-store-password: 1q2w3e4r!
+    key-alias: yunki
+  port: 8443
+  http2:
+    enabled: true
 
 spring:
   servlet:
@@ -46,7 +66,7 @@ spring:
   config.activate.on-profile: local
   docker:
     compose:
-      file: ./env/mysql/mysql-compose.yml
+      file: ./env/notice-compose.yml
       lifecycle-management: start_and_stop
       start:
         command: up

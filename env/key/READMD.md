@@ -1,0 +1,1 @@
+keytool -genkey -alias yunki -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 4000

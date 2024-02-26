@@ -38,3 +38,6 @@ out/
 
 ### For env ###
 env/mysql/data
+env/mysql/conf
+env/redis/data
+env/redis/conf

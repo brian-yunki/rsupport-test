@@ -3,6 +3,7 @@ spring:
     import:
       - application-common.yml
       - application-mysql.yml
+      - application-redis.yml
       - application-springdoc.yml
   profiles:
     group:

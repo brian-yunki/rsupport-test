@@ -1,10 +1,8 @@
-version: '3.1'
+version: '3.8'
 
 services:
-  ###################################
-  #### DB Mysql
-  ###################################
-  db:
+##
+  mysql:
     image: mysql:8.3.0
     container_name: rsupport-mysql
     command:
@@ -20,8 +18,18 @@ services:
       MYSQL_ROOT_PASSWORD: 1q2w3e4r!
       TZ: Asia/Seoul
     volumes:
-      - ./data:/var/lib/mysql
-      - ./conf:/etc/mysql/conf.d
-
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
     ports:
       - 3306:3306
+## redis
+  redis:
+    image: redis:alpine
+    container_name: rsupport-redis
+#    command: redis-server --requirepass 1q2w3e4r! --port 6379
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf:/usr/local/etc/redis/redis.conf
+    restart: always
+    ports:
+      - 6379:6379

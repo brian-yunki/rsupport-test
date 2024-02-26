@@ -37,6 +37,4 @@ public class GloablExceptionHandler {
         return new ResponseEntity<>(errorResponse.apply(HttpStatus.PAYLOAD_TOO_LARGE, "한 파일은 50MB이하. 전체 파일은 200MB까지 업로드가 가능합니다."), HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
-
-
 }
